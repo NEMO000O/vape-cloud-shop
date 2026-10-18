@@ -232,7 +232,7 @@
             
             const orderPayload = compressedParts.join("_");
             const startParam = "order_" + orderPayload + "_" + userId;
-            const targetUrl = "https://t.me" + botUsername + "?start=" + startParam;
+            const targetUrl = "https://t.me/" + botUsername + "?start=" + startParam;
 
             const container = document.getElementById('cart-container');
             container.innerHTML = `
