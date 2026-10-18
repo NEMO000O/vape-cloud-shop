@@ -63,13 +63,15 @@
         const brands = {
             RickMorty: "Рик и Морти",
             FunkyLands: "Funky Lands",
-            Vozol: "Vozol"
+            Vozol: "Vozol",
+            LostMary: "Lost Mary"
         };
 
         const brandFlavors = {
             RickMorty: ["Все вкусы", "Zombie", "На замерзоне", "The Anime", "На замерзоне: EXTRA HARD", "На замерзоне: Jackpot", "На замерзоне: Bottle", "На замерзоне: Кислые"],
             FunkyLands: ["Все вкусы"],
-            Vozol: ["Gear Power", "Rave 46000", "Rave 56000 pro", "Vista 20000"]
+            Vozol: ["Gear Power", "Rave 46000", "Rave 56000 pro", "Vista 20000"],
+            LostMary: ["MIXER+", "BM16000", "BM16000 Bloom", "OS12000"]
         };
         const products = [
             {"id":1,"name":"Rick & Morty 23000 23мл Яблоко-клубника","price":750,"category":"RickMorty","flavor":"Zombie"},
@@ -277,6 +279,75 @@
             {"id":192,"name":"Vozol 20000 20мл Клубника-вишня-малина","price":550,"category":"Vozol","flavor":"Vista 20000"},
             {"id":193,"name":"Vozol 20000 20мл Клубника-пина колада","price":550,"category":"Vozol","flavor":"Vista 20000"},
             {"id":194,"name":"Vozol 20000 20мл Бузина-грейпфрут","price":550,"category":"Vozol","flavor":"Vista 20000"},
+
+            {"id":195,"name":"Lost Mary 25000 19мл Вишнёвые леденцы","price":740,"category":"LostMary","flavor":"MIXER+"},
+            {"id":196,"name":"Lost Mary 25000 19мл Яблоко-чёрная смородина","price":740,"category":"LostMary","flavor":"MIXER+"},
+            {"id":197,"name":"Lost Mary 25000 19мл Микс-мята","price":740,"category":"LostMary","flavor":"MIXER+"},
+            {"id":198,"name":"Lost Mary 25000 19мл Ежевика-мята","price":740,"category":"LostMary","flavor":"MIXER+"},
+            {"id":199,"name":"Lost Mary 25000 19мл Яблочные леденцы","price":740,"category":"LostMary","flavor":"MIXER+"},
+            {"id":200,"name":"Lost Mary 25000 19мл Вишня-лемон","price":740,"category":"LostMary","flavor":"MIXER+"},
+            {"id":201,"name":"Lost Mary 25000 19мл Персик-апельсин","price":740,"category":"LostMary","flavor":"MIXER+"},
+            {"id":202,"name":"Lost Mary 25000 19мл Черника-малина-лёд","price":740,"category":"LostMary","flavor":"MIXER+"},
+            {"id":203,"name":"Lost Mary 25000 19мл Грейпфрут-лимон-лайм","price":740,"category":"LostMary","flavor":"MIXER+"},
+            {"id":204,"name":"Lost Mary 25000 19мл Ананас-киви-персик","price":740,"category":"LostMary","flavor":"MIXER+"},
+            {"id":205,"name":"Lost Mary 25000 19мл Ледяной арбуз","price":740,"category":"LostMary","flavor":"MIXER+"},
+            {"id":206,"name":"Lost Mary 25000 19мл Черника-арбуз","price":740,"category":"LostMary","flavor":"MIXER+"},
+            {"id":207,"name":"Lost Mary 25000 19мл Яблоко-виноград","price":740,"category":"LostMary","flavor":"MIXER+"},
+            {"id":208,"name":"Lost Mary 25000 19мл Вишня-гранат-ананас","price":740,"category":"LostMary","flavor":"MIXER+"},
+            {"id":209,"name":"Lost Mary 25000 19мл Апельсин-клубника","price":740,"category":"LostMary","flavor":"MIXER+"},
+            {"id":210,"name":"Lost Mary 25000 19мл Черника-малина-роза","price":740,"category":"LostMary","flavor":"MIXER+"},
+            {"id":211,"name":"Lost Mary 25000 19мл Зелёный чай-лимон-лайм","price":740,"category":"LostMary","flavor":"MIXER+"},
+            {"id":212,"name":"Lost Mary 25000 19мл Клубника-питахайя","price":740,"category":"LostMary","flavor":"MIXER+"},
+            {"id":213,"name":"Lost Mary 25000 19мл Арбузные конфеты","price":740,"category":"LostMary","flavor":"MIXER+"},
+            {"id":214,"name":"Lost Mary 25000 19мл Малина-ананас","price":740,"category":"LostMary","flavor":"MIXER+"},
+
+            {"id":215,"name":"Lost Mary 16000 18мл Вишня-лайм","price":740,"category":"LostMary","flavor":"BM16000"},
+            {"id":216,"name":"Lost Mary 16000 18мл Леденец-кислая ежевика","price":740,"category":"LostMary","flavor":"BM16000"},
+            {"id":217,"name":"Lost Mary 16000 18мл Ледяной арбуз","price":740,"category":"LostMary","flavor":"BM16000"},
+            {"id":218,"name":"Lost Mary 16000 18мл Клубника-киви","price":740,"category":"LostMary","flavor":"BM16000"},
+            {"id":219,"name":"Lost Mary 16000 18мл Чай-ягодный микс","price":740,"category":"LostMary","flavor":"BM16000"},
+            {"id":220,"name":"Lost Mary 16000 18мл Киви-ананас-персик","price":740,"category":"LostMary","flavor":"BM16000"},
+            {"id":221,"name":"Lost Mary 16000 18мл Персик-манго-арбуз","price":740,"category":"LostMary","flavor":"BM16000"},
+            {"id":222,"name":"Lost Mary 16000 18мл Киви-маракуйя-гуава","price":740,"category":"LostMary","flavor":"BM16000"},
+            {"id":223,"name":"Lost Mary 16000 18мл Виноградный лёд","price":740,"category":"LostMary","flavor":"BM16000"},
+            {"id":224,"name":"Lost Mary 16000 18мл Ананас-драгонфрукт и грейпфрут","price":740,"category":"LostMary","flavor":"BM16000"},
+            {"id":225,"name":"Lost Mary 16000 18мл Гранатовый сок","price":740,"category":"LostMary","flavor":"BM16000"},
+            {"id":226,"name":"Lost Mary 16000 18мл Голубика-малина-лёд","price":740,"category":"LostMary","flavor":"BM16000"},
+            {"id":227,"name":"Lost Mary 16000 18мл Виноград-клюква","price":740,"category":"LostMary","flavor":"BM16000"},
+            {"id":228,"name":"Lost Mary 16000 18мл Кислое яблоко","price":740,"category":"LostMary","flavor":"BM16000"},
+            {"id":229,"name":"Lost Mary 16000 18мл Клубника-банан","price":740,"category":"LostMary","flavor":"BM16000"},
+            {"id":230,"name":"Lost Mary 16000 18мл Ежевика-вишня","price":740,"category":"LostMary","flavor":"BM16000"},
+            {"id":231,"name":"Lost Mary 16000 18мл Лимон-лайм-грейпфрут","price":740,"category":"LostMary","flavor":"BM16000"},
+            {"id":232,"name":"Lost Mary 16000 18мл Горная мята","price":740,"category":"LostMary","flavor":"BM16000"},
+            {"id":233,"name":"Lost Mary 16000 18мл Перечная мята","price":740,"category":"LostMary","flavor":"BM16000"},
+            {"id":234,"name":"Lost Mary 16000 18мл Грейпфрут-маракуйя","price":740,"category":"LostMary","flavor":"BM16000"},
+            
+            {"id":235,"name":"Lost Mary 16000 18мл Персик-ягоды","price":740,"category":"LostMary","flavor":"BM16000 Bloom"},
+            {"id":236,"name":"Lost Mary 16000 18мл Чёрная смородина-виноград","price":740,"category":"LostMary","flavor":"BM16000 Bloom"},
+            {"id":237,"name":"Lost Mary 16000 18мл Сакура-малина","price":740,"category":"LostMary","flavor":"BM16000 Bloom"},
+            {"id":238,"name":"Lost Mary 16000 18мл Жасминовый чай с молоком","price":740,"category":"LostMary","flavor":"BM16000 Bloom"},
+            {"id":239,"name":"Lost Mary 16000 18мл Кислое манго-ананас","price":740,"category":"LostMary","flavor":"BM16000 Bloom"},
+            {"id":240,"name":"Lost Mary 16000 18мл Вишнёвый сад","price":740,"category":"LostMary","flavor":"BM16000 Bloom"},
+            {"id":241,"name":"Lost Mary 16000 18мл Ежевика-грейпфрут","price":740,"category":"LostMary","flavor":"BM16000 Bloom"},
+            {"id":242,"name":"Lost Mary 16000 18мл Вишнёвый всплеск","price":740,"category":"LostMary","flavor":"BM16000 Bloom"},
+            {"id":243,"name":"Lost Mary 16000 18мл Черника-роза-лёд","price":740,"category":"LostMary","flavor":"BM16000 Bloom"},
+            {"id":244,"name":"Lost Mary 16000 18мл Кислое яблоко-арбуз","price":740,"category":"LostMary","flavor":"BM16000 Bloom"},
+
+            {"id":245,"name":"Lost Mary 12000 16мл Ледяной арбуз","price":540,"category":"LostMary","flavor":"OS12000"},
+            {"id":246,"name":"Lost Mary 12000 16мл Ананас-кокос-лёд","price":540,"category":"LostMary","flavor":"OS12000"},
+            {"id":247,"name":"Lost Mary 12000 16мл Персик-манго-лёд","price":540,"category":"LostMary","flavor":"OS12000"},
+            {"id":248,"name":"Lost Mary 12000 16мл Киви-дыня-яблоко","price":540,"category":"LostMary","flavor":"OS12000"},
+            {"id":249,"name":"Lost Mary 12000 16мл Игристый лимон-лайм","price":540,"category":"LostMary","flavor":"OS12000"},
+            {"id":250,"name":"Lost Mary 12000 16мл Зелёное яблоко-маракуйя-киви","price":540,"category":"LostMary","flavor":"OS12000"},
+            {"id":251,"name":"Lost Mary 12000 16мл Ледяная ежевика","price":540,"category":"LostMary","flavor":"OS12000"},
+            {"id":252,"name":"Lost Mary 12000 16мл Вишня-лайм-лёд","price":540,"category":"LostMary","flavor":"OS12000"},
+            {"id":253,"name":"Lost Mary 12000 16мл Игристая вишнёвая кола","price":540,"category":"LostMary","flavor":"OS12000"},
+            {"id":254,"name":"Lost Mary 12000 16мл Виноград-лимон-лёд","price":540,"category":"LostMary","flavor":"OS12000"},
+            {"id":255,"name":"Lost Mary 12000 16мл Ананас-питайя-грейпфрут","price":540,"category":"LostMary","flavor":"OS12000"},
+            {"id":256,"name":"Lost Mary 12000 16мл Клубника-персик-вишня","price":540,"category":"LostMary","flavor":"OS12000"},
+            {"id":257,"name":"Lost Mary 12000 16мл Черника-лайм","price":540,"category":"LostMary","flavor":"OS12000"},
+            {"id":258,"name":"Lost Mary 12000 16мл Двойное яблоко-лёд","price":540,"category":"LostMary","flavor":"OS12000"},
+            {"id":259,"name":"Lost Mary 12000 16мл Черника-малина-лимонад","price":540,"category":"LostMary","flavor":"OS12000"},
         ];
         function loadData() {
             currentBrand = Object.keys(brands)[0];
