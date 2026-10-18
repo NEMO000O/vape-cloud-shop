@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Vape Shop Каталог</title>
+    <script src="https://telegram.org"></script>
+    <style>
+        body { background-color: #ffffff; color: #000000; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; margin: 0; padding: 16px; box-sizing: border-box; user-select: none; -webkit-user-select: none; }
+        @media (prefers-color-scheme: dark) { body { background-color: #121212; color: #ffffff; } }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+        .title { font-size: 22px; font-weight: bold; margin: 0; background: linear-gradient(135deg, #a855f7, #6366f1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        
+        /* Меню Брендов (Первый уровень) */
+        .brands-container { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 8px; white-space: nowrap; -webkit-overflow-scrolling: touch; }
+        .brands-container::-webkit-scrollbar { display: none; }
+        .brand-btn { padding: 10px 18px; border-radius: 12px; border: 1px solid rgba(0,0,0,0.1); background-color: #f4f4f5; color: #000000; font-size: 14px; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+        @media (prefers-color-scheme: dark) { .brand-btn { background-color: #1e1e1e; color: #ffffff; border-color: rgba(255,255,255,0.1); } }
+        .brand-btn.active { background-color: #a855f7; color: white; border-color: #a855f7; box-shadow: 0 4px 12px rgba(168, 85, 247, 0.3); }
+
+        /* Выпадающее подменю Вкусов (Второй уровень) */
+        .flavors-container { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 12px; margin-bottom: 16px; white-space: nowrap; -webkit-overflow-scrolling: touch; opacity: 0; max-height: 0; transition: all 0.3s ease-out; overflow-y: hidden; }
+        .flavors-container.show { opacity: 1; max-height: 50px; }
+        .flavor-btn { padding: 6px 14px; border-radius: 20px; border: 1px solid rgba(168, 85, 247, 0.3); background-color: transparent; color: #a855f7; font-size: 12px; font-weight: 600; cursor: pointer; }
+        @media (prefers-color-scheme: dark) { .flavor-btn { color: #c084fc; border-color: rgba(192, 132, 252, 0.3); } }
+        .flavor-btn.active { background-color: #6366f1; color: white; border-color: #6366f1; }
+
+        .catalog-grid { display: grid; grid-template-cols: repeat(2, minmax(0, 1fr)); gap: 12px; margin-bottom: 30px; }
+        .card { background-color: #f4f4f5; padding: 12px; border-radius: 16px; display: flex; flex-direction: column; justify-content: space-between; border: 1px solid rgba(0,0,0,0.05); min-height: 220px; }
+        @media (prefers-color-scheme: dark) { .card { background-color: #1e1e1e; } }
+        .card-icon { width: 100%; height: 75px; background-color: rgba(168, 85, 247, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 32px; margin-bottom: 8px; }
+        .card-title { font-size: 13px; font-weight: 600; margin: 0 0 6px 0; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .price { color: #a855f7; font-weight: 700; font-size: 15px; margin-bottom: 6px; display: block; }
+        
+        .quantity-counter { display: flex; align-items: center; justify-content: space-between; background-color: rgba(0,0,0,0.05); border-radius: 10px; padding: 2px; box-sizing: border-box; width: 100%; margin-top: auto; }
+        @media (prefers-color-scheme: dark) { .quantity-counter { background-color: rgba(255,255,255,0.08); } }
+        .count-btn { background-color: #a855f7; color: white; border: none; width: 28px; height: 28px; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .count-input { border: none; background: transparent; width: 42px; text-align: center; font-size: 14px; font-weight: 600; color: inherit; outline: none; }
+        
+        .cart-section { border-top: 2px solid #a855f7; padding-top: 20px; margin-top: 20px; }
+        .cart-item { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(0,0,0,0.1); font-size: 13px; }
+        .checkout-btn { width: 100%; background-color: #34c759; color: white; border: none; padding: 14px; border-radius: 14px; font-weight: 700; font-size: 16px; text-align: center; cursor: pointer; display: block; margin-top: 15px; box-sizing: border-box; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="header"><h1 class="title">VAPE CLOUD 💨</h1></div>
+    
+    <!-- Контейнеры двух уровней меню -->
+    <div class="brands-container" id="brands-menu"></div>
+    <div class="flavors-container" id="flavors-menu"></div>
+    
+    <div class="catalog-grid" id="catalog"></div>
+    <div id="cart-container"></div>
+
+    <script>
+        var tg = window.Telegram.WebApp;
+        if (tg) { try { tg.ready(); tg.expand(); } catch(e) {} }
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const userId = urlParams.get('user_id') || '0';
+
+        let cart = {};
+        
+        // Переменные состояния двухуровневого фильтра
+        let currentBrand = ''; // Выбранный бренд
+        let currentFlavor = ''; // Выбранный вкус
+
+        // Названия брендов первого уровня
+        const brands = { 
+            elfbar: "Elf Bar", 
+            lostmary: "Lost Mary", 
+            fizzy: "Fizzy", 
+            hqd: "HQD" 
+        };
+
+        // Вкусы, привязанные к конкретным брендам
+        const brandFlavors = {
+            elfbar: ["Все вкусы", "Черника", "Мята", "Манго"],
+            lostmary: ["Все вкусы", "Ананас", "Клубника", "Арбуз"],
+            fizzy: ["Все вкусы", "Виноград", "Яблоко", "Мята"],
+            hqd: ["Все вкусы", "Манго", "Черника", "Дыня"]
+        };
+                // База данных товаров с привязкой к брендам (category) и вкусам (flavor)
+        const products = [
+            // Бренд: Elf Bar
+            {"id":1,"name":"Elf Bar 5000 — Черника-Лёд","price":950,"category":"elfbar","flavor":"Черника"},
+            {"id":2,"name":"Elf Bar 5000 — Свежая Мята","price":950,"category":"elfbar","flavor":"Мята"},
+            {"id":3,"name":"Elf Bar 5000 — Тропический Манго","price":950,"category":"elfbar","flavor":"Манго"},
+            {"id":4,"name":"Elf Bar 10000 — Черничный Джем","price":1400,"category":"elfbar","flavor":"Черника"},
+            {"id":5,"name":"Elf Bar 10000 — Мятный Взрыв","price":1400,"category":"elfbar","flavor":"Мята"},
+
+            // Бренд: Lost Mary
+            {"id":6,"name":"Lost Mary MO5000 — Сочный Ананас","price":1000,"category":"lostmary","flavor":"Ананас"},
+            {"id":7,"name":"Lost Mary MO5000 — Клубничный Коктейль","price":1000,"category":"lostmary","flavor":"Клубника"},
+            {"id":8,"name":"Lost Mary MO5000 — Спелый Арбуз","price":1000,"category":"lostmary","flavor":"Арбуз"},
+            {"id":9,"name":"Lost Mary OS12000 — Ананасовый Айс","price":1450,"category":"lostmary","flavor":"Ананас"},
+            {"id":10,"name":"Lost Mary OS12000 — Клубника-Киви","price":1450,"category":"lostmary","flavor":"Клубника"},
+
+            // Бренд: Fizzy
+            {"id":11,"name":"Fizzy Great 10000 — Дикий Виноград","price":1200,"category":"fizzy","flavor":"Виноград"},
+            {"id":12,"name":"Fizzy Great 10000 — Зелёное Яблоко","price":1200,"category":"fizzy","flavor":"Яблоко"},
+            {"id":13,"name":"Fizzy Great 10000 — Ледяная Мята","price":1200,"category":"fizzy","flavor":"Мята"},
+
+            // Бренд: HQD
+            {"id":14,"name":"HQD Cuvie Slick — Сладкий Манго","price":850,"category":"hqd","flavor":"Манго"},
+            {"id":15,"name":"HQD Miracle 8000 — Черничные Сливки","price":1300,"category":"hqd","flavor":"Черника"},
+            {"id":16,"name":"HQD Miracle 8000 — Медовая Дыня","price":1300,"category":"hqd","flavor":"Дыня"}
+        ];
+        function loadData() {
+            // Выбираем по умолчанию первый бренд, чтобы каталог не был пустым
+            currentBrand = Object.keys(brands)[0];
+            currentFlavor = "Все вкусы";
+            renderBrandsMenu();
+            renderFlavorsMenu();
+            renderCatalog();
+        }
+
+        // Рендеринг верхнего меню брендов
+        function renderBrandsMenu() {
+            const container = document.getElementById('brands-menu');
+            container.innerHTML = '';
+            Object.keys(brands).forEach(key => {
+                const btn = document.createElement('button');
+                btn.className = `brand-btn ${currentBrand === key ? 'active' : ''}`;
+                btn.innerText = brands[key];
+                btn.onclick = () => {
+                    currentBrand = key;
+                    currentFlavor = "Все вкусы"; // При смене бренда сбрасываем вкус
+                    renderBrandsMenu();
+                    renderFlavorsMenu();
+                    renderCatalog();
+                };
+                container.appendChild(btn);
+            });
+        }
+
+        // Рендеринг выпадающего подменю вкусов под выбранный бренд
+        function renderFlavorsMenu() {
+            const container = document.getElementById('flavors-menu');
+            container.innerHTML = '';
+            
+            const flavors = brandFlavors[currentBrand] || [];
+            if (flavors.length > 0) {
+                container.classList.add('show'); // Показываем выпадающую панель
+                flavors.forEach(flavor => {
+                    const btn = document.createElement('button');
+                    btn.className = `flavor-btn ${currentFlavor === flavor ? 'active' : ''}`;
+                    btn.innerText = flavor;
+                    btn.onclick = () => {
+                        currentFlavor = flavor;
+                        renderFlavorsMenu();
+                        renderCatalog();
+                    };
+                    container.appendChild(btn);
+                });
+            } else {
+                container.classList.remove('show');
+            }
+        }
+
+        // Рендеринг карточек одноразок с двойной фильтрацией (Бренд + Вкус)
+        function renderCatalog() {
+            const grid = document.getElementById('catalog');
+            grid.innerHTML = '';
+            
+            // Фильтруем сначала по бренду, а затем по вкусу (если выбран конкретный вкус)
+            let filtered = products.filter(p => p.category === currentBrand);
+            if (currentFlavor !== "Все вкусы") {
+                filtered = filtered.filter(p => p.flavor === currentFlavor);
+            }
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '<p style="grid-column: span 2; text-align: center; color: #8e8e93; padding: 20px 0;">Товаров с таким вкусом сейчас нет</p>';
+                return;
+            }
+
+            filtered.forEach(p => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                const currentQty = cart[p.id] || 0;
+
+                card.innerHTML = `
+                    <div class="card-icon">💨</div>
+                    <h3 class="card-title">${p.name}</h3>
+                    <div style="display:flex; flex-direction:column; justify-content:space-between; margin-top:auto; gap: 8px;">
+                        <span class="price">${p.price} ₽</span>
+                        <div class="quantity-counter">
+                            <button class="count-btn" onclick="updateQty(${p.id}, -1)">-</button>
+                            <input type="number" class="count-input" id="input-${p.id}" value="${currentQty}" min="0" onchange="setQtyFromInput(${p.id}, this.value)">
+                            <button class="count-btn" onclick="updateQty(${p.id}, 1)">+</button>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function updateQty(id, delta) {
+            let val = (cart[id] || 0) + delta;
+            if (val < 0) val = 0;
+            setQtyInCart(id, val);
+        }
+
+        function setQtyFromInput(id, value) {
+            let val = parseInt(value) || 0;
+            if (val < 0) val = 0;
+            setQtyInCart(id, val);
+        }
+
+        function setQtyInCart(id, val) {
+            if (val === 0) { delete cart[id]; } else { cart[id] = val; }
+            const input = document.getElementById(`input-${id}`);
+            if (input) input.value = val;
+            renderCart();
+        }
+
+        function renderCart() {
+            const container = document.getElementById('cart-container');
+            let total = 0; let hasItems = false;
+            let html = `<div class="cart-section"><h2 class="title" style="font-size:18px; margin-bottom:15px; background:none; -webkit-text-fill-color:inherit; color:inherit;">Ваша корзина</h2>`;
+
+            Object.keys(cart).forEach(id => {
+                const p = products.find(prod => prod.id == id);
+                if (p && cart[id] > 0) {
+                    hasItems = true; const cost = p.price * cart[id]; total += cost;
+                    html += `<div class="cart-item">
+                        <div><strong>${p.name}</strong><br><span style="color:#8e8e93;">${p.price} ₽ x ${cart[id]}</span></div>
+                        <span style="font-weight:700; margin-left:auto; color:#a855f7;">${cost} ₽</span>
+                    </div>`;
+                }
+            });
+            html += `<div style="display:flex; justify-content:space-between; font-weight:bold; margin-top:15px; font-size:16px;"><span>Итого:</span><span style="margin-left:auto;">${total} ₽</span></div>`;
+            html += `<button class="checkout-btn" onclick="sendOrder()">Оформить заказ</button></div>`;
+
+            container.innerHTML = hasItems ? html : '';
+        }
+
+        // Отправка зашифрованного компактного заказа через ваш фирменный диплинк
+        function sendOrder() {
+            let total = 0; let compressedParts = [];
+            Object.keys(cart).forEach(id => {
+                if (cart[id] > 0) {
+                    const p = products.find(prod => prod.id == id);
+                    if (p) total += p.price * cart[id];
+                    compressedParts.push("i" + id + "q" + cart[id]);
+                }
+            });
+
+            if (compressedParts.length === 0) return;
+
+            // ВНИМАНИЕ: Укажите точный юзернейм нового бота вейп-шопа БЕЗ знака @
+            const botUsername = "Toys_Seller_bot";
+            
+            const orderPayload = compressedParts.join("_");
+            const startParam = "order_" + orderPayload + "_" + userId;
+            const targetUrl = "https://t.me" + botUsername + "?start=" + startParam;
+
+            const container = document.getElementById('cart-container');
+            container.innerHTML = `
+                <div class="cart-section" style="text-align: center; background-color: rgba(168, 85, 247, 0.1); border-color: #a855f7; border-radius: 16px; padding: 20px;">
+                    <h2 class="title" style="color: #a855f7; font-size: 20px; margin-bottom: 10px; background:none; -webkit-text-fill-color:inherit;">🎉 Заказ сформирован!</h2>
+                    <p style="font-size: 14px; margin-bottom: 20px; color: #8e8e93;">Сумма к оплате: <strong style="color:#a855f7;">${total} ₽</strong>.</p>
+                    <a href="${targetUrl}" target="_blank" class="checkout-btn" style="background-color: #a855f7; margin-top: 0;">ПОДТВЕРДИТЬ В ЧАТЕ БОТА</a>
+                </div>
+            `;
+            cart = {}; renderCatalog();
+        }
+
+        loadData();
+    </script>
+</body>
+</html>
