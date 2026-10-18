@@ -11,14 +11,12 @@
         .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
         .title { font-size: 22px; font-weight: bold; margin: 0; background: linear-gradient(135deg, #a855f7, #6366f1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
-        /* Меню Брендов (Первый уровень) */
         .brands-container { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 8px; white-space: nowrap; -webkit-overflow-scrolling: touch; }
         .brands-container::-webkit-scrollbar { display: none; }
         .brand-btn { padding: 10px 18px; border-radius: 12px; border: 1px solid rgba(0,0,0,0.1); background-color: #f4f4f5; color: #000000; font-size: 14px; font-weight: 700; cursor: pointer; transition: all 0.2s; }
         @media (prefers-color-scheme: dark) { .brand-btn { background-color: #1e1e1e; color: #ffffff; border-color: rgba(255,255,255,0.1); } }
         .brand-btn.active { background-color: #a855f7; color: white; border-color: #a855f7; box-shadow: 0 4px 12px rgba(168, 85, 247, 0.3); }
 
-        /* Выпадающее подменю Вкусов (Второй уровень) */
         .flavors-container { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 12px; margin-bottom: 16px; white-space: nowrap; -webkit-overflow-scrolling: touch; opacity: 0; max-height: 0; transition: all 0.3s ease-out; overflow-y: hidden; }
         .flavors-container.show { opacity: 1; max-height: 50px; }
         .flavor-btn { padding: 6px 14px; border-radius: 20px; border: 1px solid rgba(168, 85, 247, 0.3); background-color: transparent; color: #a855f7; font-size: 12px; font-weight: 600; cursor: pointer; }
@@ -45,7 +43,6 @@
 <body>
     <div class="header"><h1 class="title">VAPE CLOUD 💨</h1></div>
     
-    <!-- Контейнеры двух уровней меню -->
     <div class="brands-container" id="brands-menu"></div>
     <div class="flavors-container" id="flavors-menu"></div>
     
@@ -60,12 +57,9 @@
         const userId = urlParams.get('user_id') || '0';
 
         let cart = {};
-        
-        // Переменные состояния двухуровневого фильтра
-        let currentBrand = ''; // Выбранный бренд
-        let currentFlavor = ''; // Выбранный вкус
+        let currentBrand = '';
+        let currentFlavor = '';
 
-        // Названия брендов первого уровня
         const brands = { 
             elfbar: "Elf Bar", 
             lostmary: "Lost Mary", 
@@ -73,41 +67,34 @@
             hqd: "HQD" 
         };
 
-        // Вкусы, привязанные к конкретным брендам
         const brandFlavors = {
             elfbar: ["Все вкусы", "Черника", "Мята", "Манго"],
             lostmary: ["Все вкусы", "Ананас", "Клубника", "Арбуз"],
             fizzy: ["Все вкусы", "Виноград", "Яблоко", "Мята"],
             hqd: ["Все вкусы", "Манго", "Черника", "Дыня"]
         };
-                // База данных товаров с привязкой к брендам (category) и вкусам (flavor)
         const products = [
-            // Бренд: Elf Bar
             {"id":1,"name":"Elf Bar 5000 — Черника-Лёд","price":950,"category":"elfbar","flavor":"Черника"},
             {"id":2,"name":"Elf Bar 5000 — Свежая Мята","price":950,"category":"elfbar","flavor":"Мята"},
             {"id":3,"name":"Elf Bar 5000 — Тропический Манго","price":950,"category":"elfbar","flavor":"Манго"},
             {"id":4,"name":"Elf Bar 10000 — Черничный Джем","price":1400,"category":"elfbar","flavor":"Черника"},
             {"id":5,"name":"Elf Bar 10000 — Мятный Взрыв","price":1400,"category":"elfbar","flavor":"Мята"},
 
-            // Бренд: Lost Mary
             {"id":6,"name":"Lost Mary MO5000 — Сочный Ананас","price":1000,"category":"lostmary","flavor":"Ананас"},
             {"id":7,"name":"Lost Mary MO5000 — Клубничный Коктейль","price":1000,"category":"lostmary","flavor":"Клубника"},
             {"id":8,"name":"Lost Mary MO5000 — Спелый Арбуз","price":1000,"category":"lostmary","flavor":"Арбуз"},
             {"id":9,"name":"Lost Mary OS12000 — Ананасовый Айс","price":1450,"category":"lostmary","flavor":"Ананас"},
             {"id":10,"name":"Lost Mary OS12000 — Клубника-Киви","price":1450,"category":"lostmary","flavor":"Клубника"},
 
-            // Бренд: Fizzy
             {"id":11,"name":"Fizzy Great 10000 — Дикий Виноград","price":1200,"category":"fizzy","flavor":"Виноград"},
             {"id":12,"name":"Fizzy Great 10000 — Зелёное Яблоко","price":1200,"category":"fizzy","flavor":"Яблоко"},
             {"id":13,"name":"Fizzy Great 10000 — Ледяная Мята","price":1200,"category":"fizzy","flavor":"Мята"},
 
-            // Бренд: HQD
             {"id":14,"name":"HQD Cuvie Slick — Сладкий Манго","price":850,"category":"hqd","flavor":"Манго"},
             {"id":15,"name":"HQD Miracle 8000 — Черничные Сливки","price":1300,"category":"hqd","flavor":"Черника"},
             {"id":16,"name":"HQD Miracle 8000 — Медовая Дыня","price":1300,"category":"hqd","flavor":"Дыня"}
         ];
         function loadData() {
-            // Выбираем по умолчанию первый бренд, чтобы каталог не был пустым
             currentBrand = Object.keys(brands)[0];
             currentFlavor = "Все вкусы";
             renderBrandsMenu();
@@ -115,7 +102,6 @@
             renderCatalog();
         }
 
-        // Рендеринг верхнего меню брендов
         function renderBrandsMenu() {
             const container = document.getElementById('brands-menu');
             container.innerHTML = '';
@@ -125,7 +111,7 @@
                 btn.innerText = brands[key];
                 btn.onclick = () => {
                     currentBrand = key;
-                    currentFlavor = "Все вкусы"; // При смене бренда сбрасываем вкус
+                    currentFlavor = "Все вкусы"; 
                     renderBrandsMenu();
                     renderFlavorsMenu();
                     renderCatalog();
@@ -134,14 +120,13 @@
             });
         }
 
-        // Рендеринг выпадающего подменю вкусов под выбранный бренд
         function renderFlavorsMenu() {
             const container = document.getElementById('flavors-menu');
             container.innerHTML = '';
             
             const flavors = brandFlavors[currentBrand] || [];
             if (flavors.length > 0) {
-                container.classList.add('show'); // Показываем выпадающую панель
+                container.classList.add('show'); 
                 flavors.forEach(flavor => {
                     const btn = document.createElement('button');
                     btn.className = `flavor-btn ${currentFlavor === flavor ? 'active' : ''}`;
@@ -158,12 +143,10 @@
             }
         }
 
-        // Рендеринг карточек одноразок с двойной фильтрацией (Бренд + Вкус)
         function renderCatalog() {
             const grid = document.getElementById('catalog');
             grid.innerHTML = '';
             
-            // Фильтруем сначала по бренду, а затем по вкусу (если выбран конкретный вкус)
             let filtered = products.filter(p => p.category === currentBrand);
             if (currentFlavor !== "Все вкусы") {
                 filtered = filtered.filter(p => p.flavor === currentFlavor);
@@ -234,8 +217,6 @@
 
             container.innerHTML = hasItems ? html : '';
         }
-
-        // Отправка зашифрованного компактного заказа через ваш фирменный диплинк
         function sendOrder() {
             let total = 0; let compressedParts = [];
             Object.keys(cart).forEach(id => {
@@ -247,9 +228,7 @@
             });
 
             if (compressedParts.length === 0) return;
-
-            // ВНИМАНИЕ: Укажите точный юзернейм нового бота вейп-шопа БЕЗ знака @
-            const botUsername = "Toys_Seller_bot";
+            const botUsername = "cloud_vapeseller_bot";
             
             const orderPayload = compressedParts.join("_");
             const startParam = "order_" + orderPayload + "_" + userId;
