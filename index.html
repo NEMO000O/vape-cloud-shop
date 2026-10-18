@@ -64,35 +64,55 @@
             elfbar: "Elf Bar", 
             lostmary: "Lost Mary", 
             fizzy: "Fizzy", 
-            hqd: "HQD" 
+            hqd: "HQD",
+            RickMorty: "Рик и Морти"
         };
 
         const brandFlavors = {
             elfbar: ["Все вкусы", "Черника", "Мята", "Манго"],
             lostmary: ["Все вкусы", "Ананас", "Клубника", "Арбуз"],
             fizzy: ["Все вкусы", "Виноград", "Яблоко", "Мята"],
-            hqd: ["Все вкусы", "Манго", "Черника", "Дыня"]
+            hqd: ["Все вкусы", "Манго", "Черника", "Дыня"],
+            RickMorty: ["Все вкусы", "Zombie", "На замерзоне", "The Anime", "На замерзоне: EXTRA HARD", "На замерзоне: Jackpot", "На замерзоне: Bottle", "На замерзоне: Кислые"]
         };
         const products = [
-            {"id":1,"name":"Elf Bar 5000 — Черника-Лёд","price":950,"category":"elfbar","flavor":"Черника"},
-            {"id":2,"name":"Elf Bar 5000 — Свежая Мята","price":950,"category":"elfbar","flavor":"Мята"},
-            {"id":3,"name":"Elf Bar 5000 — Тропический Манго","price":950,"category":"elfbar","flavor":"Манго"},
-            {"id":4,"name":"Elf Bar 10000 — Черничный Джем","price":1400,"category":"elfbar","flavor":"Черника"},
-            {"id":5,"name":"Elf Bar 10000 — Мятный Взрыв","price":1400,"category":"elfbar","flavor":"Мята"},
+            {"id":1,"name":"Rick & Morty 23000 23мл Яблоко-клубника","price":950,"category":"RickMorty","flavor":"Zombie"},
+            {"id":2,"name":"Rick & Morty 23000 23мл Виноградная газировка","price":950,"category":"RickMorty","flavor":"Zombie"},
+            {"id":3,"name":"Rick & Morty 23000 23мл Ягодный энергетик","price":950,"category":"RickMorty","flavor":"Zombie"},
+            {"id":4,"name":"Rick & Morty 23000 23мл Персик-малина","price":1400,"category":"RickMorty","flavor":"Zombie"},
+            {"id":5,"name":"Rick & Morty 23000 23мл Лесные ягоды","price":1400,"category":"RickMorty","flavor":"Zombie"},
+            {"id":6,"name":"Rick & Morty 23000 23мл Черника-арбуз","price":1000,"category":"RickMorty","flavor":"Zombie"},
+            {"id":7,"name":"Rick & Morty 23000 23мл Вишнёвый лимонад","price":1000,"category":"RickMorty","flavor":"Zombie"},
+            {"id":8,"name":"Rick & Morty 23000 23мл Спрайт арбуз-лайм","price":1000,"category":"RickMorty","flavor":"Zombie"},
+            {"id":9,"name":"Rick & Morty 23000 23мл Черника-малина","price":1450,"category":"RickMorty","flavor":"Zombie"},
+            {"id":10,"name":"Rick & Morty 23000 23мл Яблоко-клубника","price":1450,"category":"RickMorty","flavor":"Zombie"},
+            {"id":11,"name":"Rick & Morty 23000 23мл Апельсиновый скитлс","price":1200,"category":"RickMorty","flavor":"Zombie"},
+            {"id":12,"name":"Rick & Morty 23000 23мл Манго-клубника","price":1200,"category":"RickMorty","flavor":"Zombie"},
+            {"id":13,"name":"Rick & Morty 23000 23мл Виноград-черника","price":1200,"category":"RickMorty","flavor":"Zombie"},
+            {"id":14,"name":"Rick & Morty 23000 23мл Малиновая газировка","price":850,"category":"RickMorty","flavor":"Zombie"},
+            {"id":15,"name":"Rick & Morty 23000 23мл Клубничный энергетик","price":1300,"category":"RickMorty","flavor":"Zombie"},
+            {"id":16,"name":"Rick & Morty 23000 23мл Клюквенная содовая","price":1300,"category":"RickMorty","flavor":"Zombie"},
+            {"id":17,"name":"Rick & Morty 23000 23мл Земляничный мохито","price":1200,"category":"RickMorty","flavor":"Zombie"},
+            {"id":18,"name":"Rick & Morty 23000 23мл Ежевичный бабл гам","price":1200,"category":"RickMorty","flavor":"Zombie"},
+            {"id":19,"name":"Rick & Morty 23000 23мл Чёрная смородина","price":1200,"category":"RickMorty","flavor":"Zombie"},
+            {"id":20,"name":"Rick & Morty 23000 23мл Фруктовый скитлс","price":850,"category":"RickMorty","flavor":"Zombie"},
 
-            {"id":6,"name":"Lost Mary MO5000 — Сочный Ананас","price":1000,"category":"lostmary","flavor":"Ананас"},
-            {"id":7,"name":"Lost Mary MO5000 — Клубничный Коктейль","price":1000,"category":"lostmary","flavor":"Клубника"},
-            {"id":8,"name":"Lost Mary MO5000 — Спелый Арбуз","price":1000,"category":"lostmary","flavor":"Арбуз"},
-            {"id":9,"name":"Lost Mary OS12000 — Ананасовый Айс","price":1450,"category":"lostmary","flavor":"Ананас"},
-            {"id":10,"name":"Lost Mary OS12000 — Клубника-Киви","price":1450,"category":"lostmary","flavor":"Клубника"},
-
-            {"id":11,"name":"Fizzy Great 10000 — Дикий Виноград","price":1200,"category":"fizzy","flavor":"Виноград"},
-            {"id":12,"name":"Fizzy Great 10000 — Зелёное Яблоко","price":1200,"category":"fizzy","flavor":"Яблоко"},
-            {"id":13,"name":"Fizzy Great 10000 — Ледяная Мята","price":1200,"category":"fizzy","flavor":"Мята"},
-
-            {"id":14,"name":"HQD Cuvie Slick — Сладкий Манго","price":850,"category":"hqd","flavor":"Манго"},
-            {"id":15,"name":"HQD Miracle 8000 — Черничные Сливки","price":1300,"category":"hqd","flavor":"Черника"},
-            {"id":16,"name":"HQD Miracle 8000 — Медовая Дыня","price":1300,"category":"hqd","flavor":"Дыня"}
+            {"id":21,"name":"Rick & Morty 20000 20мл Манго-арбуз","price":1000,"category":"RickMorty","flavor":"На замерзоне"},
+            {"id":22,"name":"Rick & Morty 20000 20мл Тропический ананас","price":1000,"category":"RickMorty","flavor":"На замерзоне"},
+            {"id":23,"name":"Rick & Morty 20000 20мл Малина-ежевика","price":1450,"category":"RickMorty","flavor":"На замерзоне"},
+            {"id":24,"name":"Rick & Morty 20000 20мл Гранат-малина","price":1450,"category":"RickMorty","flavor":"На замерзоне"},
+            {"id":25,"name":"Rick & Morty 20000 20мл Мятный бабл гам","price":1200,"category":"RickMorty","flavor":"На замерзоне"},
+            {"id":26,"name":"Rick & Morty 20000 20мл Двойной манго","price":1200,"category":"RickMorty","flavor":"На замерзоне"},
+            {"id":27,"name":"Rick & Morty 20000 20мл Яблочный энергетик","price":1200,"category":"RickMorty","flavor":"На замерзоне"},
+            {"id":28,"name":"Rick & Morty 20000 20мл Спрайт","price":850,"category":"RickMorty","flavor":"На замерзоне"},
+            {"id":29,"name":"Rick & Morty 20000 20мл Банан-клубника","price":1300,"category":"RickMorty","flavor":"На замерзоне"},
+            {"id":30,"name":"Rick & Morty 20000 20мл Кола-лайм","price":1300,"category":"RickMorty","flavor":"На замерзоне"},
+            {"id":31,"name":"Rick & Morty 20000 20мл Скитлс","price":1200,"category":"RickMorty","flavor":"На замерзоне"},
+            {"id":32,"name":"Rick & Morty 20000 20мл Дыня-персик","price":1200,"category":"RickMorty","flavor":"На замерзоне"},
+            {"id":33,"name":"Rick & Morty 20000 20мл Ананас-апельсин","price":1200,"category":"RickMorty","flavor":"На замерзоне"},
+            {"id":34,"name":"Rick & Morty 20000 20мл Манго-питайя","price":850,"category":"RickMorty","flavor":"На замерзоне"},
+            {"id":35,"name":"Rick & Morty 20000 20мл Морс","price":1200,"category":"RickMorty","flavor":"На замерзоне"},
+            {"id":36,"name":"Rick & Morty 20000 20мл Грейпфрут-чёрная смородина","price":850,"category":"RickMorty","flavor":"На замерзоне"}
         ];
         function loadData() {
             currentBrand = Object.keys(brands)[0];
