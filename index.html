@@ -445,7 +445,7 @@
                 const card = document.createElement('div');
                 card.className = 'card';
                 const currentQty = cart[p.id] || 0;
-                const imgUrl = `/vape-shop/${p.image}`;
+                const imgUrl = p.image;
 
                 card.innerHTML = `
                     <!-- Тег img с автоподстраховкой: если фото пропадет, отобразится красивая иконка пара -->
