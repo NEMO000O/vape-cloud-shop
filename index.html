@@ -64,14 +64,16 @@
             RickMorty: "Рик и Морти",
             FunkyLands: "Funky Lands",
             Vozol: "Vozol",
-            LostMary: "Lost Mary"
+            LostMary: "Lost Mary",
+            Elfbar: "Elfbar"
         };
 
         const brandFlavors = {
             RickMorty: ["Все вкусы", "Zombie", "На замерзоне", "The Anime", "На замерзоне: EXTRA HARD", "На замерзоне: Jackpot", "На замерзоне: Bottle", "На замерзоне: Кислые"],
             FunkyLands: ["Все вкусы"],
             Vozol: ["Gear Power", "Rave 46000", "Rave 56000 pro", "Vista 20000"],
-            LostMary: ["MIXER+", "BM16000", "BM16000 Bloom", "OS12000"]
+            LostMary: ["MIXER+", "BM16000", "BM16000 Bloom", "OS12000"],
+            Elfbar:["DUKE", "Ice King"]
         };
         const products = [
             {"id":1,"name":"Rick & Morty 23000 23мл Яблоко-клубника","price":750,"category":"RickMorty","flavor":"Zombie"},
@@ -348,6 +350,33 @@
             {"id":257,"name":"Lost Mary 12000 16мл Черника-лайм","price":540,"category":"LostMary","flavor":"OS12000"},
             {"id":258,"name":"Lost Mary 12000 16мл Двойное яблоко-лёд","price":540,"category":"LostMary","flavor":"OS12000"},
             {"id":259,"name":"Lost Mary 12000 16мл Черника-малина-лимонад","price":540,"category":"LostMary","flavor":"OS12000"},
+
+            {"id":260,"name":"Elfbar 20000 Кислый виноград-лёд","price":680,"category":"Elfbar","flavor":"DUKE"},
+            {"id":261,"name":"Elfbar 20000 Черника-малина-лёд","price":680,"category":"Elfbar","flavor":"DUKE"},
+            {"id":262,"name":"Elfbar 20000 Кислое яблоко-лёд","price":680,"category":"Elfbar","flavor":"DUKE"},
+            {"id":263,"name":"Elfbar 20000 Ледяной арбуз","price":680,"category":"Elfbar","flavor":"DUKE"},
+            {"id":264,"name":"Elfbar 20000 Вишня-лимон","price":680,"category":"Elfbar","flavor":"DUKE"},
+            {"id":265,"name":"Elfbar 20000 Ананас-персик","price":680,"category":"Elfbar","flavor":"DUKE"},
+            {"id":266,"name":"Elfbar 20000 Кислая ежевика-лёд","price":680,"category":"Elfbar","flavor":"DUKE"},
+            {"id":267,"name":"Elfbar 20000 Вишнёвый всплеск","price":680,"category":"Elfbar","flavor":"DUKE"},
+            {"id":268,"name":"Elfbar 20000 Северные ягоды","price":680,"category":"Elfbar","flavor":"DUKE"},
+            {"id":269,"name":"Elfbar 20000 Виноград-гранат","price":680,"category":"Elfbar","flavor":"DUKE"},
+            {"id":270,"name":"Elfbar 20000 Лимон-лайм","price":680,"category":"Elfbar","flavor":"DUKE"},
+            {"id":271,"name":"Elfbar 20000 Клубника-киви","price":680,"category":"Elfbar","flavor":"DUKE"},
+            {"id":272,"name":"Elfbar 20000 Сицилийский апельсин","price":680,"category":"Elfbar","flavor":"DUKE"},
+            {"id":273,"name":"Elfbar 20000 Горная мята","price":680,"category":"Elfbar","flavor":"DUKE"},
+            {"id":274,"name":"Elfbar 20000 Клюква ананас","price":680,"category":"Elfbar","flavor":"DUKE"},
+
+            {"id":275,"name":"Elfbar 30000 20мл Ледяной арбуз","price":670,"category":"Elfbar","flavor":"Ice King"},
+            {"id":276,"name":"Elfbar 30000 20мл Ледяной персик","price":670,"category":"Elfbar","flavor":"Ice King"},
+            {"id":277,"name":"Elfbar 30000 20мл Ледяной виноград","price":670,"category":"Elfbar","flavor":"Ice King"},
+            {"id":278,"name":"Elfbar 30000 20мл Клубника арбуз","price":670,"category":"Elfbar","flavor":"Ice King"},
+            {"id":279,"name":"Elfbar 30000 20мл Вишня-гранат-клюква","price":670,"category":"Elfbar","flavor":"Ice King"},
+            {"id":280,"name":"Elfbar 30000 20мл Киви-маракуйя-гуава","price":670,"category":"Elfbar","flavor":"Ice King"},
+            {"id":281,"name":"Elfbar 30000 20мл Черника-малина-лёд","price":670,"category":"Elfbar","flavor":"Ice King"},
+            {"id":282,"name":"Elfbar 30000 20мл Лайм-кола","price":670,"category":"Elfbar","flavor":"Ice King"},
+            {"id":283,"name":"Elfbar 30000 20мл Ежевика-клюква","price":670,"category":"Elfbar","flavor":"Ice King"},
+            {"id":284,"name":"Elfbar 30000 20мл Двойное яблоко","price":670,"category":"Elfbar","flavor":"Ice King"}
         ];
         function loadData() {
             currentBrand = Object.keys(brands)[0];
