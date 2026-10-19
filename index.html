@@ -76,7 +76,7 @@
             Elfbar:["DUKE", "Ice King"]
         };
         const products = [
-            {"id":1,"name":"Rick & Morty 23000 23мл Яблоко-клубника","price":750,"category":"RickMorty","flavor":"Zombie"},
+            {"id":1,"name":"Rick & Morty 23000 23мл Яблоко-клубника","price":750,"category":"RickMorty","flavor":"Zombie","image":"images/fon.jpg"},
             {"id":2,"name":"Rick & Morty 23000 23мл Виноградная газировка","price":750,"category":"RickMorty","flavor":"Zombie"},
             {"id":3,"name":"Rick & Morty 23000 23мл Ягодный энергетик","price":750,"category":"RickMorty","flavor":"Zombie"},
             {"id":4,"name":"Rick & Morty 23000 23мл Персик-малина","price":750,"category":"RickMorty","flavor":"Zombie"},
@@ -445,9 +445,11 @@
                 const card = document.createElement('div');
                 card.className = 'card';
                 const currentQty = cart[p.id] || 0;
+                const imgUrl = `/vape-shop/${p.image}`;
 
                 card.innerHTML = `
-                    <div class="card-icon">💨</div>
+                    <!-- Тег img с автоподстраховкой: если фото пропадет, отобразится красивая иконка пара -->
+                    <img src="${imgUrl}" style="width: 100%; height: 95px; border-radius: 12px; object-fit: cover; margin-bottom: 8px;" onerror="this.onerror=null; this.outerHTML='<div class=&quot;card-icon&quot;>💨</div>';">
                     <h3 class="card-title">${p.name}</h3>
                     <div style="display:flex; flex-direction:column; justify-content:space-between; margin-top:auto; gap: 8px;">
                         <span class="price">${p.price} ₽</span>
@@ -461,6 +463,22 @@
                 grid.appendChild(card);
             });
         }
+
+        //         card.innerHTML = `
+        //             <div class="card-icon">💨</div>
+        //             <h3 class="card-title">${p.name}</h3>
+        //             <div style="display:flex; flex-direction:column; justify-content:space-between; margin-top:auto; gap: 8px;">
+        //                 <span class="price">${p.price} ₽</span>
+        //                 <div class="quantity-counter">
+        //                     <button class="count-btn" onclick="updateQty(${p.id}, -1)">-</button>
+        //                     <input type="number" class="count-input" id="input-${p.id}" value="${currentQty}" min="0" onchange="setQtyFromInput(${p.id}, this.value)">
+        //                     <button class="count-btn" onclick="updateQty(${p.id}, 1)">+</button>
+        //                 </div>
+        //             </div>
+        //         `;
+        //         grid.appendChild(card);
+        //     });
+        // }
 
         function updateQty(id, delta) {
             let val = (cart[id] || 0) + delta;
